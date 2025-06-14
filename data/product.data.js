@@ -11,7 +11,7 @@ const products = [
     id: 2,
     name: 'Ergonomic Office Chair',
     description: 'Comfortable ergonomic office chair with lumbar support and adjustable height settings for all-day comfort.',
-    imageUrl: 'https://images.unsplash.com/photo-1688578735427-994cedea3ea4',
+    imageUrl: 'https://images.unsplash.com/photo-1688578735352-9a6f2ac3b70a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8RXJnb25vbWljJTIwT2ZmaWNlJTIwQ2hhaXJ8ZW58MHx8MHx8fDA%3D',
     price: 199.99,
     quantity: 8
   },
@@ -19,7 +19,7 @@ const products = [
     id: 3,
     name: 'Premium Running Shoes',
     description: 'Lightweight running shoes with advanced cushioning technology and breathable mesh design for optimal performance.',
-    imageUrl: 'https://images.unsplash.com/photo-15422291026-7eec264c27ff',
+    imageUrl: 'https://images.unsplash.com/photo-1559743345-60e0907c4853?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fFByZW1pdW0lMjBSdW5uaW5nJTIwU2hvZXN8ZW58MHx8MHx8fDA%3D',
     price: 129.99,
     quantity: 0
   }
