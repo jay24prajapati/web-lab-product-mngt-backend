@@ -1,8 +1,7 @@
 const mongoose = require(`mongoose`);
 
-const DB_NAME = process.env.DB_NAME || `product_management`;
-const MONGO_URI = process.env.MONGO_URI || `***REMOVED***${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
-// ***REMOVED***${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0
+const DB_NAME = process.env.DB_NAME;
+const MONGO_URI = process.env.MONGO_URI;
 
 const connectDB = async () => {
   try {
