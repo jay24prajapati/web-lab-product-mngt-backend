@@ -1,51 +1,78 @@
 let products = require('../data/product.data.js');
+const Product = require('../models/product.model.js');
 
-exports.getAllProducts = (req, res) => {
-  res.json(products);
-};
-
-exports.getProductById = (req, res) => {
-  const id = parseInt(req.params.id);
-  const product = products.find(p => p.id === id);
-
-  if (!product) {
-    return res.status(404).json({ message: 'Product not found' });
+exports.getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    if (products.length === 0) {
+      return res.status(404).json({ message: `No products found` });
+    }
+    res.json(products);
+  } catch (error) {
+    console.error(`Error fetching products: ${error.message}`);
+    return res.status(500).json({ message: 'Internal server error' });
   }
+}
 
-  res.json(product);
-};
-
-
-exports.addProduct = (req, res) => {
-  const newProduct = { id: Date.now(), ...req.body };
-
-  products.push(newProduct);
-  res.status(201).json({ message: 'Product added successfully', product: newProduct });
-};
-
-
-exports.updateProduct = (req, res) => {
-  const id = parseInt(req.params.id);
-  const index = products.findIndex(p => p.id === id);
-
-  if (index === -1) {
-    return res.status(404).json({ message: 'Product not found' });
+exports.getProductById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json(product);
+  } catch (error) {
+    console.error(`Error fetching product: ${error.message}`);
+    return res.status(500).json({ message: 'Internal server error' });
   }
-
-  products[index] = { ...products[index], ...req.body };
-  res.json({ message: 'Product updated successfully', product: products[index] });
-};
+}
 
 
 
-exports.deleteProduct = (req, res) => {
-  const id = parseInt(req.params.id);
-  const index = products.findIndex(p => p.id === id);
 
-  if (index === -1) {
-    return res.status(404).json({ message: 'Product not found' });
+
+
+exports.addProduct = async (req, res) => {
+  try {
+    const newProduct = await Product.create(req.body);
+    if (!newProduct) {
+      return res.status(400).json({ message: 'Failed to add product' });
+    }
+    res.status(201).json({ message: 'Product added successfully', product: newProduct });
+  } catch (error) {
+    console.error(`Error adding product: ${error.message}`);
+    return res.status(500).json({ message: 'Internal server error' });
   }
+}
 
-  products.splice(index, 1);
-  res.json({ message: 'Product deleted successfully' });
-};
+exports.updateProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json({ message: 'Product updated successfully', product: updatedProduct });
+  } catch (error) {
+    console.error(`Error updating product: ${error.message}`);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+
+
+
+exports.deleteProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedProduct = await Product.findByIdAndDelete(id);
+    if (!deletedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error(`Error deleting product: ${error.message}`);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
